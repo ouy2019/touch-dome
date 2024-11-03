@@ -4,7 +4,7 @@
       <loading-page v-if="showLoading" />
       <component :is="backgroundComponent" v-bind="attrs" v-on="eventHandlers" />
       <!-- thingjsx场景 -->
-      <iframe :src="thingjsX" id="thing-x" allowfullscreen="true"></iframe>
+      <!-- <iframe :src="thingjsX" id="thing-x" allowfullscreen="true"></iframe> -->
       <!-- 菜单 -->
       <t-menu v-if="store?.menusInfo?.length && route.params.screenName != 'home'" />
     </div>
@@ -131,7 +131,10 @@ html,
   height: 100%;
   pointer-events: none;
 }
-
+.tab-toggle-com {
+  margin-top: -14px;
+  margin-right: -12px;
+}
 .uearth {
   overflow: hidden;
   position: fixed;

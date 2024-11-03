@@ -106,11 +106,37 @@ const config = {
     },
     {
       title: '智慧人力',
-      code: 'humanResources',
+      code: 'humanResources2',
       router: 'http://192.168.218.105:8089/bigscreen2/#/quHospital?key=tyyq',
+    },
+    {
+      title: '人力资源',
+      code: 'humanResources',
+      router: 'humanResources',
+    },
+    {
+      title: '医疗运营',
+      code: 'medicalOperations',
+      router: 'medicalOperations',
     },
   ],
   showProcess: false,
+  tab: {
+    tab1: [
+      {
+        title: '今日',
+        key: 'day',
+      },
+      {
+        title: '昨日',
+        key: 'yesterday',
+      },
+      {
+        title: '年度',
+        key: 'year',
+      },
+    ],
+  },
 };
 
 window.config = config;

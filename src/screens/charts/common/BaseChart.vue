@@ -90,6 +90,7 @@ defineExpose<BaseChartExpose>({
 onMounted(() => {
   chartInstance = echarts.init(chartRef.value as HTMLElement) as unknown as EChartsType;
   chartInstance.setOption(props.option as EChartsOption);
+  setTimeout(() => chartInstance?.resize(), 110);
 });
 
 watch(
