@@ -16,7 +16,7 @@
         <business-volume />
         <disease-types />
         <undergoing-surgery />
-        <experience-situation v-if="0" />
+        <!-- <experience-situation /> -->
       </template>
     </side-bar>
   </div>

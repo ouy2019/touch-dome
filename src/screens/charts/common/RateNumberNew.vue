@@ -8,6 +8,8 @@
 <script lang="ts" setup>
 defineProps<{
   value: number;
+  state: string;
+  reversal: boolean;
 }>();
 </script>
 
@@ -15,9 +17,10 @@ defineProps<{
   <div
     class="totals-rate-wrap"
     :class="{
-      'totals-rate-decrease': value < 0,
-      'totals-rate-increase': value > 0,
-      'totals-rate': value == 0,
+      'totals-rate-decrease': state == 'down',
+      'totals-rate-increase': state == 'up',
+      'totals-rate': !['down', 'up']?.includes(state),
+      reversal: reversal,
     }"
   >
     <p class="totals-rate">
@@ -56,6 +59,15 @@ defineProps<{
       background-image: url('@/assets/img/home/up-icon.png');
       background-size: cover;
     }
+    &.reversal {
+      .totals-rate-icon {
+        width: 10px;
+        height: 13px;
+        background-image: url('@/assets/img/home/reduce-icon.png');
+        background-size: 100%;
+        background-size: 100%;
+      }
+    }
   }
 
   &.totals-rate-decrease {
@@ -66,6 +78,15 @@ defineProps<{
     .totals-rate-icon {
       background-image: url('@/assets/img/home/down-icon.png');
       background-size: cover;
+    }
+    &.reversal {
+      .totals-rate-icon {
+        width: 10px;
+        height: 13px;
+        background-image: url('@/assets/img/home/increase-icon.png');
+        background-size: 100%;
+        background-size: 100%;
+      }
     }
   }
   &.totals-rate {

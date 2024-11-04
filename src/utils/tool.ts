@@ -123,6 +123,10 @@ export function getImgUrlByURL(relativePath: string) {
   return new URL(`../assets/img/${relativePath}`, import.meta.url).href;
 }
 
+export function formatNumberWithCommas(num) {
+  return num.toLocaleString();
+}
+
 export {
   convertSizeProp,
   notConvertSizeProp,

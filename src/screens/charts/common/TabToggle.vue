@@ -28,16 +28,22 @@ const change = (item) => {
 .btn-list {
   @include flex(flex-start, center, row);
   .btn-item {
-    padding: 7px 14px;
+    padding: 5px 14px;
     text-align: center;
     background: url('@/assets/img/tab/tab-default.png') center center no-repeat;
     background-size: 100% 100%;
     margin-left: 6px;
     cursor: pointer;
     pointer-events: all;
+    color: #6a9bbf;
+    font-size: 12px;
+    font-family: OPPOSans;
+    font-weight: 400;
+    font-size: 14px;
     &.active {
       background: url('@/assets/img/tab/tab-select.png') center center no-repeat;
       background-size: 100% 100%;
+      color: #fff;
     }
   }
 }

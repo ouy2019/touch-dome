@@ -1,4 +1,4 @@
-/** 登录模拟数据 */
+/** 人力资源模拟数据 */
 
 (function (global) {
   global.requestMockData = {
@@ -21,12 +21,12 @@
                   ratio: '30%',
                 },
                 {
-                  title: '后勤职能',
+                  title: '医师',
                   value: 264,
                   ratio: '30%',
                 },
                 {
-                  title: '医师',
+                  title: '后勤职能',
                   value: 264,
                   ratio: '30%',
                 },
