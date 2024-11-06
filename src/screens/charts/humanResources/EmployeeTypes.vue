@@ -66,7 +66,6 @@ const eChartsOption = computed(() => {
     <card-module title="职工种类分布">
       <div class="employee-types-content">
         <div class="asset-statistics-chart">
-          <base-chart class="chart" :option="eChartsOption" />
           <div class="total-number">
             <span>{{ data?.total }}</span> <br />
             <span class="total-number-label">{{ data?.totalTitle }}</span>
