@@ -147,8 +147,8 @@ const eChartsOption = computed(() => {
                 {{ item.title }}
               </p>
               <p class="value">{{ formatNumberWithCommas(item.value) }}{{ item.unit }}</p>
-              <div class="bottom">
-                {{ item.ratio }}
+              <div class="bottom" :style="{ color: colorList2[index] }">
+                {{ item.ratio }}{{ item.ratioUnit }}
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@ const eChartsOption = computed(() => {
   margin-top: 35px;
   .cost-analysis-content {
     .titles {
-      margin: 10px -20px 0 10px;
+      margin: 20px -20px 0 10px;
       @include flex(space-around, center, row);
       .item {
         width: 30%;
@@ -207,21 +207,25 @@ const eChartsOption = computed(() => {
     .render {
       position: relative;
       width: 410px;
+      margin-top: -10px;
       .render-list {
         position: absolute;
-        top: 0;
+        top: 20px;
         left: 0;
         width: 100%;
         @include flex(space-between, center, row);
-        margin-left: 40px;
+        margin-left: 16px;
         .item {
-          width: 40%;
+          width: 31%;
           .title {
             font-family: OPPOSans;
             font-weight: 400;
             font-size: 12px;
-            color: #ffffff;
             @include flex(flex-start, center, row);
+            font-family: OPPOSans;
+            font-weight: 400;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
             .icon {
               width: 6px;
               height: 6px;
@@ -234,15 +238,18 @@ const eChartsOption = computed(() => {
             font-size: 18px;
             color: #ffffff;
             padding-left: 10px;
-            margin-top: 4px;
+            margin-top: 8px;
           }
           .bottom {
-            margin-top: 4px;
+            margin-top: 8px;
             padding-left: 10px;
             font-family: OPPOSans;
             font-weight: 400;
             font-size: 14px;
             color: #c3c3c3;
+            font-family: DIN;
+            font-weight: 500;
+            font-size: 16px;
           }
         }
       }
@@ -252,6 +259,7 @@ const eChartsOption = computed(() => {
       height: 190px;
       margin: 0 auto;
       margin-top: 30px;
+
       :deep(div) {
         width: 100% !important;
         height: 100% !important;
@@ -263,12 +271,15 @@ const eChartsOption = computed(() => {
       :after {
         content: '';
         position: absolute;
-        width: 125px;
-        height: 125px;
+        width: 122px;
+        height: 52px;
         border-radius: 50%;
         // background: rgba(0, 0, 0, 0.5);
+        background: url('@/assets/img/background/medicalOperations/cost-analysis.png') center center
+          no-repeat;
+        background-size: 100% 100%;
         left: 50%;
-        top: 50%;
+        top: 39%;
         margin: 0 auto;
         transform: translate(-50%, -50%);
       }

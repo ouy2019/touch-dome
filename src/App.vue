@@ -7,6 +7,7 @@
       <!-- <iframe :src="thingjsX" id="thing-x" allowfullscreen="true"></iframe> -->
       <!-- 菜单 -->
       <t-menu v-if="store?.menusInfo?.length && route.params.screenName != 'home'" />
+      <t-class-list />
     </div>
   </KeepAlive>
   <KeepAlive>
