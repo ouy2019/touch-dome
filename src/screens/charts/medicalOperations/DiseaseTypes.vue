@@ -4,6 +4,7 @@
 
 <script lang="ts" setup>
 import { medicalOperationsStore } from '@/store/medicalOperations';
+import { percentaga } from '@/utils/common';
 import { formatNumberWithCommas } from '../../../utils/tool';
 
 const medicalOperations = medicalOperationsStore();
@@ -13,7 +14,6 @@ const data = computed(() => medicalOperations.data.diseaseTypes || {});
 const currentData = computed(() => data?.value?.list || {});
 
 const colorList = ['#DD4444', '#F7A05A', '#52F29D', '#3D9EFF', '#3D9EFF'];
-const line = ref([0, 10, 20, 30, 40, 50]);
 
 const modal = ref(false);
 
@@ -32,6 +32,36 @@ const tabList = computed(() => {
 const currentDataNew = computed(() =>
   currentData?.value?.find?.((item) => item.title == select.value)
 );
+
+const numberOfValues = 6;
+
+const max = computed(() => {
+  let maxs = Math.max(
+    ...(currentDataNew.value?.children?.map((item) => {
+      return item.value;
+    }) || [0])
+  );
+  const step = ((maxs * 100) / 80 / numberOfValues) * (numberOfValues - 1);
+  return step;
+});
+
+const moreMax = computed(() => {
+  let maxs = Math.max(
+    ...(data?.value?.more?.children?.map((item) => {
+      return item.value;
+    }) || [0])
+  );
+  const step = ((maxs * 100) / 80 / numberOfValues) * (numberOfValues - 1);
+  return step;
+});
+
+const line = computed(() => {
+  const values: number[] = [];
+  for (let i = 0; i < numberOfValues; i++) {
+    values.push(parseInt((max?.value / (numberOfValues - 1)) * i));
+  }
+  return values;
+});
 </script>
 
 <template>
@@ -53,7 +83,7 @@ const currentDataNew = computed(() =>
             <div class="process">
               <div
                 class="process-box"
-                :style="{ width: item.process + '%', background: colorList[index] }"
+                :style="{ width: percentaga(item.value, max) + '%', background: colorList[index] }"
               ></div>
             </div>
           </div>
@@ -80,7 +110,7 @@ const currentDataNew = computed(() =>
                 <div
                   class="process-box"
                   :style="{
-                    width: item.process + '%',
+                    width: percentaga(item.value, moreMax) + '%',
                     background: colorList?.[index] || '#3D9EFF',
                   }"
                 ></div>
@@ -106,9 +136,10 @@ const currentDataNew = computed(() =>
     background: url('@/assets/img/background/medicalOperations/disease-types.png') center center
       no-repeat;
     background-size: 100% 100%;
-    position: absolute;
-    left: -230%;
-    top: -60px;
+    position: fixed;
+    right: 39.5vw;
+    top: 20vh;
+    // transform: translateX(-50%);
     .header {
       @include flex(space-between, center, row);
       height: 30px;
@@ -183,6 +214,7 @@ const currentDataNew = computed(() =>
             font-weight: 400;
             font-size: 14px;
             color: #ffffff;
+            padding-left: 4px;
           }
           .right {
             @include flex(space-between, center, row);

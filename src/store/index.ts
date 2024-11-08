@@ -58,6 +58,8 @@ export const useAppStore = defineStore('app', {
     loadingProgress: 5,
     /** 是否显示加载中组件 */
     showLoading: true,
+    /** 当前科室选择 */
+    department: '',
   }),
   actions: {
     setCampusLoaded(val: boolean) {

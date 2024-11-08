@@ -38,7 +38,7 @@ const currentTabName = ref('年度总览');
 .medical-overview {
   height: 58px;
   width: 1000px;
-  pointer-events: all;
+  pointer-events: none;
   @include flex(space-between, center, row);
   position: absolute;
   left: 50%;

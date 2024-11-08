@@ -1,6 +1,18 @@
 import router from '@/routers';
 import { useAppStore } from '../store/index';
 
+// thingjsx相关的功能
+let xplus = null;
+let iframe: any = null;
+
+/** 获取dom */
+const getDom = () => {
+  if (!iframe) {
+    xplus = document.querySelector('#thing-x');
+    iframe = xplus?.contentWindow;
+  }
+};
+
 /*
 ====== thingx-操作集自定义脚本-进入退出桃源院区 ======
 { 
@@ -63,6 +75,34 @@ export function postMessage(data: Record<string, any>) {
     iframe.contentWindow?.postMessage(data, '*');
   }
 }
+
+let prev = '';
+/** 高亮楼层 */
+export const lightFloors = (id: string) => {
+  getDom();
+
+  /** 调整视点动画位置 */
+  iframe?.postMessage(
+    {
+      type: 'xxv',
+      data: `
+        if('${prev}'){
+          let prev = uino.app.query('#${prev}')[0];
+          if(prev) prev.style.color = null;
+        }
+        let twin = uino.app.query('#${id}')[0];
+        if (twin) { 
+          twin.style.color = '#ffc74f';
+        }
+        uino.app.one('levelchange',(res)=>{
+          if (res) if(twin) twin.style.color = null;
+        });
+      `,
+    },
+    '*'
+  );
+  prev = id;
+};
 
 /**
  * 飞向孪生体

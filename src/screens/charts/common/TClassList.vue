@@ -14,8 +14,9 @@
         <div
           v-for="(item, index) in items"
           :key="index"
-          :class="['nav-item', { selected: selectedIndex === index }]"
-          @click="selectItem(index)"
+          :class="['nav-item', { selected: store.department === item.id }]"
+          @click="selectItem(item.id)"
+          :title="item.name"
         >
           {{ item.name }}
         </div>
@@ -28,68 +29,62 @@
 import { useAppStore } from '@/store';
 // import InitMenuTwins from "@/utils/twins/initTwins";
 import router from '@/routers';
-import { bussinessActive } from '@/utils/thingjsx';
+import { bussinessActive, lightFloors } from '@/utils/thingjsx';
 
 const store = useAppStore();
-const items = ref([
-  {
-    name: '首页',
-  },
-  {
-    name: '产品',
-  },
-  {
-    name: '服务',
-  },
-  {
-    name: '关于我们',
-  },
-  {
-    name: '联系我们',
-  },
-  {
-    name: '首页2',
-  },
-  {
-    name: '产品2',
-  },
-  {
-    name: '服务2',
-  },
-  {
-    name: '关于我们2',
-  },
-  {
-    name: '联系我们2',
-  },
-]);
-const selectedIndex = ref(0);
+const list = window?.config.classType;
+
+const current = computed(() => {
+  return list?.find((item) => item.VisualizationId === store.level?.current?.id);
+});
+
+const items = computed(() => {
+  console.log(current?.value, store?.level, '可是--------');
+  return current?.value?.children?.map((item) => {
+    return {
+      name: item.descrip,
+      id: item.VisualizationId,
+    };
+  });
+});
+
 const navContainer = ref<HTMLElement | null>(null);
 
-const selectItem = (index: number) => {
-  selectedIndex.value = index;
+const selectItem = (index: string) => {
+  if (store.department == index) {
+    index = '';
+  }
+  lightFloors(index);
+  store.department = index;
+};
+
+const getPx = () => {
+  return navContainer.value?.children?.[0].clientHeight || 0;
 };
 
 const scrollToPrevious = () => {
   if (navContainer.value) {
-    navContainer.value.scrollTop -= 50; // 每次滚动 50px
+    navContainer.value.scrollTop -= getPx() + 20; // 每次滚动 50px
   }
 };
 
 const scrollToNext = () => {
+  getPx();
   if (navContainer.value) {
-    navContainer.value.scrollTop += 50; // 每次滚动 50px
+    navContainer.value.scrollTop += getPx() + 20; // 每次滚动 50px
   }
 };
 
-onMounted(() => {});
+onUnmounted(() => {
+  store.department = '';
+});
 </script>
 
 <style scoped lang="scss">
 .class-list {
   position: absolute;
-  top: 80px;
-  right: 19%;
+  top: 8vh;
+  right: 40vh;
   // transform: translateX(-50%);
   pointer-events: all;
   z-index: 1;
@@ -161,12 +156,15 @@ onMounted(() => {});
     width: 109px;
     height: 36px;
     line-height: 32px;
-    padding-left: 26px;
+    padding-left: 16px;
     cursor: pointer;
     background: url('@/assets/img/background/medicalOperations/p-item-default.png') center center
       no-repeat;
     background-size: 100% 100%;
     margin-bottom: 19px;
+    @include text-overflow;
+    padding-right: 0px;
+    text-align: center;
   }
 
   .nav-item.selected {

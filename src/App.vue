@@ -4,10 +4,15 @@
       <loading-page v-if="showLoading" />
       <component :is="backgroundComponent" v-bind="attrs" v-on="eventHandlers" />
       <!-- thingjsx场景 -->
-      <!-- <iframe :src="thingjsX" id="thing-x" allowfullscreen="true"></iframe> -->
+      <iframe @load="loadedIframe" :src="thingjsX" id="thing-x" allowfullscreen="true"></iframe>
       <!-- 菜单 -->
       <t-menu v-if="store?.menusInfo?.length && route.params.screenName != 'home'" />
-      <t-class-list />
+      <t-class-list
+        v-if="
+          ['Building']?.includes(store.level?.level) &&
+          ['medicalOperations', 'humanResources']?.includes(route.params.screenName)
+        "
+      />
     </div>
   </KeepAlive>
   <KeepAlive>
@@ -78,6 +83,33 @@ export default defineComponent({
     /** 设置菜单 */
     store.setMenusInfo(window.config.menu);
 
+    const loadedIframe = () => {
+      window.addEventListener(
+        'message',
+        (e) => {
+          console.log(e, 'e---------');
+          if (e.data?.type != 'xxv') return;
+
+          // 加载完成tx
+          if (e.data?.data == 'loaded') {
+          }
+
+          // 层级切换
+          // if (e.data?.option == 'levelChange') {
+          //   configStore.currentLevel = JSON.parse(e.data?.data);
+          //   if (configStore.currentLevel?.type == 'Campus' && !changeTheme.value) {
+          //     changeTheme.value = true;
+          //     setTimeout(() => {
+          //       thingjsx.toggleTheme(configStore?.night ? '黑夜' : '白天');
+          //     }, 2000);
+          //   }
+          //   console.log(configStore.currentLevel, '层级---------------------');
+          // }
+        },
+        false
+      );
+    };
+
     window.addEventListener('message', ({ data }) => {
       if (data?.source?.includes('vue-devtool')) return;
       console.info('父页面收到消息，消息内容为：', data);
@@ -90,6 +122,7 @@ export default defineComponent({
       attrs,
       eventHandlers,
       screenStyle,
+      loadedIframe,
       activeCode,
       showUe,
       buildingOrFloor,

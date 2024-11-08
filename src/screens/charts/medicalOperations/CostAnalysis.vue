@@ -143,7 +143,7 @@ const eChartsOption = computed(() => {
           <div class="render-list">
             <div class="item" v-for="(item, index) in currentData?.list" :key="index">
               <p class="title">
-                <span class="icon" :style="{ backgroundColor: colorList[index] }"></span>
+                <span class="icon" :style="{ backgroundColor: colorList2[index] }"></span>
                 {{ item.title }}
               </p>
               <p class="value">{{ formatNumberWithCommas(item.value) }}{{ item.unit }}</p>

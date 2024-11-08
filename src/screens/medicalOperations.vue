@@ -15,15 +15,15 @@
       <template #right>
         <business-volume />
         <disease-types />
-        <undergoing-surgery />
-        <!-- <experience-situation /> -->
+        <undergoing-surgery v-if="['Building', 'Floor', 'Room']?.includes(store.level?.level)" />
+        <experience-situation v-else />
       </template>
     </side-bar>
   </div>
 </template>
 
 <script lang="ts">
-import { toRef } from 'vue';
+import { toRef, watch } from 'vue';
 import { useAppStore } from '@/store';
 import { overviewHospitalStore } from '@/store/overviewHospital';
 import { autoRequest } from '@/request/autoRequest';
@@ -42,24 +42,56 @@ export default {
     const store = useAppStore();
     store.routerSetMenu();
     const medicalOperations = medicalOperationsStore();
-    autoRequest<OverviewHospital[]>(
-      {
-        url: '/medicalOperations',
-        data: {
-          ssdp: 'echarts',
+
+    const getBuilding = computed(() => {
+      let building = '';
+      if (store?.level?.level == 'Building') {
+        building = store?.level?.current?.id;
+      }
+      if (store?.level?.parent?.type == 'Building') {
+        building = store?.level?.parent?.id;
+      }
+      return building;
+    });
+    let timer: any;
+
+    const handle = () => {
+      timer?.request?.destroy && timer?.request?.destroy();
+      timer = autoRequest<OverviewHospital[]>(
+        {
+          url: '/medicalOperations',
+          data: {
+            ssdp: 'echarts',
+            building: getBuilding.value,
+            classId: store.department,
+          },
         },
-      },
-      (res) => {
-        console.log(res, '医疗运营主题数据');
-        medicalOperations.setData(res);
-      },
-      () => null,
-      'overviewHospital'
+        (res) => {
+          console.log(res, '医疗运营主题数据');
+          medicalOperations.setData(res);
+        },
+        () => null,
+        'medicalOperations'
+      );
+    };
+    handle();
+
+    watch(getBuilding, () => {
+      if (store?.level?.level == 'Building') {
+        handle();
+      }
+    });
+
+    watch(
+      () => store.department,
+      () => {
+        handle();
+      }
     );
-    // return {
-    //   activeMenu,
-    //   useThingStore,
-    // };
+
+    return {
+      store,
+    };
   },
 };
 </script>

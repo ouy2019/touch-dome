@@ -11,7 +11,7 @@ const config = {
   // thingjsX:
   //   'http://10.100.33.143:1662/thing/auth/login.html?beforeUrl=http%3A%2F%2F10.100.33.143%3A1662%2Fthing%2Fdtwin%2Findex.html',
   /** thingjsx的iframe地址 */
-  thingjsX: 'http://10.100.33.143:1662/thing/share/j7a17pondvib0ydm',
+  thingjsX: 'http://10.100.30.42:1662/thing/share/o7jtnzg9y8t443ri',
   /** 项目标题 */
   title: '智慧医院运营指挥中心',
   /** 接口统一的请求地址 */
@@ -99,25 +99,25 @@ const config = {
       code: 'intelligentMonitoring',
       router: 'intelligentMonitoring',
     },
+    // {
+    //   title: '智慧医疗运营',
+    //   code: 'medicalOperations',
+    //   router: 'http://192.168.218.105:8089/bigscreen1/#/?key=tyyq',
+    // },
+    // {
+    //   title: '智慧人力',
+    //   code: 'humanResources2',
+    //   router: 'http://192.168.218.105:8089/bigscreen2/#/quHospital?key=tyyq',
+    // },
     {
-      title: '智慧医疗运营',
+      title: '医疗运营',
       code: 'medicalOperations',
-      router: 'http://192.168.218.105:8089/bigscreen1/#/?key=tyyq',
-    },
-    {
-      title: '智慧人力',
-      code: 'humanResources2',
-      router: 'http://192.168.218.105:8089/bigscreen2/#/quHospital?key=tyyq',
+      router: 'medicalOperations',
     },
     {
       title: '人力资源',
       code: 'humanResources',
       router: 'humanResources',
-    },
-    {
-      title: '医疗运营',
-      code: 'medicalOperations',
-      router: 'medicalOperations',
     },
   ],
   showProcess: false,

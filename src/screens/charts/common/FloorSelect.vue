@@ -53,7 +53,7 @@ const localFloorObj = (id: string) => {
 <style lang="scss" scoped>
 .floor-select {
   position: absolute;
-  top: 56%;
+  top: 58%;
   right: 440px;
   z-index: 18;
   overflow-y: auto;

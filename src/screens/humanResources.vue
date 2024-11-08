@@ -40,24 +40,56 @@ export default {
     const store = useAppStore();
     store.routerSetMenu();
     const humanResourcesType = humanResourcesTypeStore();
-    autoRequest<HumanResources>(
-      {
-        url: '/humanResources',
-        data: {
-          ssdp: 'echarts',
+
+    const getBuilding = computed(() => {
+      let building = '';
+      if (store?.level?.level == 'Building') {
+        building = store?.level?.current?.id;
+      }
+      if (store?.level?.parent?.type == 'Building') {
+        building = store?.level?.parent?.id;
+      }
+      return building;
+    });
+    let timer: any;
+
+    const handle = () => {
+      timer?.request?.destroy && timer?.request?.destroy();
+      autoRequest<HumanResources>(
+        {
+          url: '/humanResources',
+          data: {
+            ssdp: 'echarts',
+            building: getBuilding.value,
+            classId: store.department,
+          },
         },
-      },
-      (res) => {
-        console.log(res, '人力资源主题数据');
-        humanResourcesType.setData(res);
-      },
-      () => null,
-      'humanResources'
+        (res) => {
+          console.log(res, '人力资源主题数据');
+          humanResourcesType.setData(res);
+        },
+        () => null,
+        'humanResources'
+      );
+      // return {
+      //   activeMenu,
+      //   useThingStore,
+      // };
+    };
+    handle();
+
+    watch(getBuilding, () => {
+      if (store?.level?.level == 'Building') {
+        handle();
+      }
+    });
+
+    watch(
+      () => store.department,
+      () => {
+        handle();
+      }
     );
-    // return {
-    //   activeMenu,
-    //   useThingStore,
-    // };
   },
 };
 </script>
